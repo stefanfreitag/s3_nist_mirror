@@ -132,7 +132,7 @@ def upload_file(file_name, object_name=None):
     if object_name is None:
         object_name = file_name
 
-    session = boto3.Session(profile_name='cdk')
+    session = boto3.Session()
     s3_client = session.client('s3')
 
     try:
@@ -162,7 +162,8 @@ class MetaInfo:
         return "MetaInformation(" + "\nLast modified date: " + self.last_modified_date + "\n" + "Size: " + str(
             self.size) + "\n)"
 
-def lambda_handler(event, context):    
+def lambda_handler(event, context):
+    global S3_BUCKET
     S3_BUCKET= os.environ["BUCKET_NAME"]     
     download("1.0")
     download("1.1")

@@ -2,6 +2,8 @@ import cdk = require("@aws-cdk/core");
 import { Bucket, BlockPublicAccess, BucketPolicy } from "@aws-cdk/aws-s3";
 import { RemovalPolicy, CfnOutput } from "@aws-cdk/core";
 import { PolicyStatement, Effect, AnyPrincipal } from "@aws-cdk/aws-iam";
+import { Runtime, Code, Function } from '@aws-cdk/aws-lambda';
+import path = require("path");
 
 export class NistMirrorStack extends cdk.Stack {
   constructor(scope: cdk.Construct, id: string, props?: cdk.StackProps) {
@@ -14,6 +16,7 @@ export class NistMirrorStack extends cdk.Stack {
       removalPolicy: RemovalPolicy.RETAIN
     });
 
+    
     const bucketContentStatement = new PolicyStatement({
       effect: Effect.ALLOW,
       actions: ["s3:GetObject"],
@@ -42,6 +45,16 @@ export class NistMirrorStack extends cdk.Stack {
       bucketContentStatement,
       bucketStatement
     );
+
+    const fn = new Function(this, 'MyFunction', {
+      runtime: Runtime.PYTHON_3_7,
+      handler: 'download_files.lambda_handler',
+      code: Code.fromAsset(path.join('./assets/')),
+      environment: {
+        BUCKET_NAME: bucket.bucketName,        
+      }
+
+    });
 
     new CfnOutput(this, "bucketArnOutput", {
       value: bucket.bucketArn,

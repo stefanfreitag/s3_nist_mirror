@@ -6,11 +6,14 @@ import requests
 import boto3
 from boto.s3.bucket import Bucket
 from botocore.exceptions import ClientError
+import os
 
-S3_BUCKET = "nistmirrorstack-bucket43879c71-wd4w54yj15ch"
+S3_BUCKET = "<undefined>"
 
 START_YEAR = 2018
 END_YEAR = datetime.datetime.now().year
+
+TARGET_DIR = "/tmp/"
 
 CVE_JSON_10_MODIFIED_URL = "https://nvd.nist.gov/feeds/json/cve/1.0/nvdcve-1.0-modified.json.gz"
 CVE_JSON_10_BASE_URL = "https://nvd.nist.gov/feeds/json/cve/1.0/nvdcve-1.0-%d.json.gz"
@@ -34,7 +37,6 @@ version11Filenames: Dict[str, str] = {
     "cveJsonBaseUrl": CVE_JSON_11_BASE_URL,
     "cveModifiedMeta": CVE_MODIFIED_11_META,
     "cveBaseMeta": CVE_BASE_11_META
-
 }
 
 versionToFilenameMaps: Dict[str, Dict[str, str]] = {
@@ -47,7 +49,7 @@ def do_download(cve_json_base_url: str):
     """
     Downloading the CVE file
     """
-    filename = cve_json_base_url.split("/")[-1]
+    filename = TARGET_DIR + cve_json_base_url.split("/")[-1]
     if path.exists(filename):
         print("Skipping download of " + cve_json_base_url)
         return
@@ -71,11 +73,11 @@ def download_version_for_year(version: str, year: int):
     after = read_local_meta_for_url(cve_base_meta_url)
     if (before is None) or (after.last_modified_date > before.last_modified_date):
         
-        upload_file(cve_base_meta_url.split("/")[-1], None)    
+        upload_file(TARGET_DIR + cve_base_meta_url.split("/")[-1], None)    
         cve_json_base_url = versionToFilenameMaps.get(
             version).get("cveJsonBaseUrl").replace("%d", str(year))
         do_download(cve_json_base_url)
-        upload_file(cve_json_base_url.split("/")[-1], None)    
+        upload_file(TARGET_DIR + cve_json_base_url.split("/")[-1], None)    
         
 
 
@@ -102,7 +104,7 @@ def read_local_meta_for_url(meta_url: str):
     """
     Read meta information from local file
     """
-    filename = meta_url.split("/")[-1]
+    filename = TARGET_DIR + meta_url.split("/")[-1]
     if path.exists(filename):
         f = open(filename, "r")
         lines = f.readlines()
@@ -160,8 +162,12 @@ class MetaInfo:
         return "MetaInformation(" + "\nLast modified date: " + self.last_modified_date + "\n" + "Size: " + str(
             self.size) + "\n)"
 
+def lambda_handler(event, context):    
+    S3_BUCKET= os.environ["BUCKET_NAME"]     
+    download("1.0")
+    download("1.1")
 
 if __name__ == '__main__':
     download("1.0")
-    # download("1.1")
-    #upload_file("requirements.txt")
+    download("1.1")
+    

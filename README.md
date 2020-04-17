@@ -1,16 +1,28 @@
 # S3 NIST Mirror
 
-## Adding required Python packages
+### General information
 
-The Python code requires additional modules have to be installed into the `assets` directory before deploying the application.
+### Cron Job
+
+## AoB
+
+### Generate the required Lambda layer
+
+The Python code requires additional modules that will be provided as part of
+a Lambda layer. For the creation of the layer execute the following commands.
 
 ```bash
-pip install requests datetime boto --target ./asset/packagetou
+mkdir -p nist-cdk-dependencies/python
+pip3 install boto3 requests datetime boto -t nist-cdk-dependencies/python
+cd nist-cdk-dependencies/
+zip -r nist-cdk-depencencies.zip python
 ```
+
+Upload the zip archive as new Lambda layer to AWS.
 
 ## ToDos
 
-* Add Lambda layer containing the requires packages
+* Remove downloading to /tmp directory
 
 ## Links
 

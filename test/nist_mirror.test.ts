@@ -1,27 +1,18 @@
-import {
-  expect as expectCDK,
-  matchTemplate,
-  MatchStyle,
-  haveResource,
-  haveResourceLike,
-} from "@aws-cdk/assert";
-import cdk = require("@aws-cdk/core");
-import { Stack } from "@aws-cdk/core";
-import { NistMirrorStack } from "../lib/nist_mirror-stack";
+import { App } from 'aws-cdk-lib';
+import * as assertions from 'aws-cdk-lib/assertions';
+import { NistMirrorStack } from '../src';
 
-test("S3 bucket is not public accessible ", () => {
-  const stack = new Stack();
+test('S3 bucket is not public accessible ', () => {
+  const app = new App();
+  const stack = new NistMirrorStack(app, 'stack');
 
-  const s = new NistMirrorStack(stack, "stack");
+  assertions.Template.fromStack(stack).hasResourceProperties('AWS::S3::Bucket', {
+    PublicAccessBlockConfiguration: {
+      BlockPublicAcls: true,
+      BlockPublicPolicy: true,
+      IgnorePublicAcls: true,
+      RestrictPublicBuckets: true,
+    },
+  });
 
-  expectCDK(s).to(
-    haveResourceLike("AWS::S3::Bucket", {
-      PublicAccessBlockConfiguration: {
-        BlockPublicAcls: true,
-        BlockPublicPolicy: true,
-        IgnorePublicAcls: true,
-        RestrictPublicBuckets: true,
-      },
-    })
-  );
 });

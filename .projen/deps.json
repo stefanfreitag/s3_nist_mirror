@@ -82,7 +82,6 @@
     },
     {
       "name": "typescript",
-      "version": "4.3.5",
       "type": "build"
     },
     {
@@ -97,7 +96,7 @@
     },
     {
       "name": "aws-cdk-lib",
-      "version": "^2.96.2",
+      "version": "^2.161.0",
       "type": "peer"
     },
     {

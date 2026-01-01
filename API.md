@@ -44,13 +44,15 @@ new NistMirrorStack(scope: Construct, id: string, props?: StackProps)
 | --- | --- |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.toString">toString</a></code> | Returns a string representation of this construct. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.addDependency">addDependency</a></code> | Add a dependency between this stack and another stack. |
-| <code><a href="#s3_nist_mirror.NistMirrorStack.addMetadata">addMetadata</a></code> | Adds an arbitary key-value pair, with information you want to record about the stack. |
+| <code><a href="#s3_nist_mirror.NistMirrorStack.addMetadata">addMetadata</a></code> | Adds an arbitrary key-value pair, with information you want to record about the stack. |
+| <code><a href="#s3_nist_mirror.NistMirrorStack.addStackTag">addStackTag</a></code> | Configure a stack tag. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.addTransform">addTransform</a></code> | Add a Transform to this stack. A Transform is a macro that AWS CloudFormation uses to process your template. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.exportStringListValue">exportStringListValue</a></code> | Create a CloudFormation Export for a string list value. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.exportValue">exportValue</a></code> | Create a CloudFormation Export for a string value. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.formatArn">formatArn</a></code> | Creates an ARN from components. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.getLogicalId">getLogicalId</a></code> | Allocates a stack-unique CloudFormation-compatible logical identity for a specific resource. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.regionalFact">regionalFact</a></code> | Look up a fact value for the given fact for the region of this stack. |
+| <code><a href="#s3_nist_mirror.NistMirrorStack.removeStackTag">removeStackTag</a></code> | Remove a stack tag. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.renameLogicalId">renameLogicalId</a></code> | Rename a generated logical identities. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.reportMissingContextKey">reportMissingContextKey</a></code> | Indicate that a context key was expected. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.resolve">resolve</a></code> | Resolve a tokenized value in the context of the current stack. |
@@ -97,7 +99,7 @@ app, and also supports nested stacks.
 public addMetadata(key: string, value: any): void
 ```
 
-Adds an arbitary key-value pair, with information you want to record about the stack.
+Adds an arbitrary key-value pair, with information you want to record about the stack.
 
 These get translated to the Metadata section of the generated template.
 
@@ -112,6 +114,28 @@ These get translated to the Metadata section of the generated template.
 ###### `value`<sup>Required</sup> <a name="value" id="s3_nist_mirror.NistMirrorStack.addMetadata.parameter.value"></a>
 
 - *Type:* any
+
+---
+
+##### `addStackTag` <a name="addStackTag" id="s3_nist_mirror.NistMirrorStack.addStackTag"></a>
+
+```typescript
+public addStackTag(tagName: string, tagValue: string): void
+```
+
+Configure a stack tag.
+
+At deploy time, CloudFormation will automatically apply all stack tags to all resources in the stack.
+
+###### `tagName`<sup>Required</sup> <a name="tagName" id="s3_nist_mirror.NistMirrorStack.addStackTag.parameter.tagName"></a>
+
+- *Type:* string
+
+---
+
+###### `tagValue`<sup>Required</sup> <a name="tagValue" id="s3_nist_mirror.NistMirrorStack.addStackTag.parameter.tagValue"></a>
+
+- *Type:* string
 
 ---
 
@@ -326,6 +350,22 @@ the given region.
 ---
 
 ###### `defaultValue`<sup>Optional</sup> <a name="defaultValue" id="s3_nist_mirror.NistMirrorStack.regionalFact.parameter.defaultValue"></a>
+
+- *Type:* string
+
+---
+
+##### `removeStackTag` <a name="removeStackTag" id="s3_nist_mirror.NistMirrorStack.removeStackTag"></a>
+
+```typescript
+public removeStackTag(tagName: string): void
+```
+
+Remove a stack tag.
+
+At deploy time, CloudFormation will automatically apply all stack tags to all resources in the stack.
+
+###### `tagName`<sup>Required</sup> <a name="tagName" id="s3_nist_mirror.NistMirrorStack.removeStackTag.parameter.tagName"></a>
 
 - *Type:* string
 
@@ -593,9 +633,9 @@ attempt to parse it to implement your logic. If you do, you must first
 check that it is a concrete value an not an unresolved token. If this
 value is an unresolved token (`Token.isUnresolved(stack.account)` returns
 `true`), this implies that the user wishes that this stack will synthesize
-into a **account-agnostic template**. In this case, your code should either
+into an **account-agnostic template**. In this case, your code should either
 fail (throw an error, emit a synth error using `Annotations.of(construct).addError()`) or
-implement some other region-agnostic behavior.
+implement some other account-agnostic behavior.
 
 ---
 

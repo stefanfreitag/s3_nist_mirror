@@ -4,11 +4,16 @@ const { UpgradeDependenciesSchedule } = require('projen/lib/javascript');
 const project = new awscdk.AwsCdkConstructLibrary({
   author: 'Stefan Freitag',
   authorAddress: 'stefan.freitag@udo.edu',
-  cdkVersion: '2.161.0',
+  cdkVersion: '2.233.0',
+  constructsVersion: '10.4.4',
   stability: Stability.EXPERIMENTAL,
   defaultReleaseBranch: 'master',
   name: 's3_nist_mirror',
   repositoryUrl: 'git://github.com/stefanfreitag/s3_nist_mirror.git',
+  minNodeVersion: '24.0.0',
+  workflowNodeVersion: '24.x',
+  packageManager: 'npm',
+  npmTrustedPublishing: true,
   depsUpgradeOptions: {
     workflowOptions: {
       schedule: UpgradeDependenciesSchedule.MONTHLY,

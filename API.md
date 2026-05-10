@@ -43,6 +43,7 @@ new NistMirrorStack(scope: Construct, id: string, props?: StackProps)
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.toString">toString</a></code> | Returns a string representation of this construct. |
+| <code><a href="#s3_nist_mirror.NistMirrorStack.with">with</a></code> | Applies one or more mixins to this construct. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.addDependency">addDependency</a></code> | Add a dependency between this stack and another stack. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.addMetadata">addMetadata</a></code> | Adds an arbitrary key-value pair, with information you want to record about the stack. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.addStackTag">addStackTag</a></code> | Configure a stack tag. |
@@ -69,6 +70,25 @@ public toString(): string
 ```
 
 Returns a string representation of this construct.
+
+##### `with` <a name="with" id="s3_nist_mirror.NistMirrorStack.with"></a>
+
+```typescript
+public with(mixins: ...IMixin[]): IConstruct
+```
+
+Applies one or more mixins to this construct.
+
+Mixins are applied in order. The list of constructs is captured at the
+start of the call, so constructs added by a mixin will not be visited.
+Use multiple `with()` calls if subsequent mixins should apply to added
+constructs.
+
+###### `mixins`<sup>Required</sup> <a name="mixins" id="s3_nist_mirror.NistMirrorStack.with.parameter.mixins"></a>
+
+- *Type:* ...constructs.IMixin[]
+
+---
 
 ##### `addDependency` <a name="addDependency" id="s3_nist_mirror.NistMirrorStack.addDependency"></a>
 
@@ -562,6 +582,8 @@ Looks up the first stack scope in which `construct` is defined.
 
 Fails if there is no stack up the tree.
 
+Will return the closest containing `Stack` or `NestedStack`.
+
 ###### `construct`<sup>Required</sup> <a name="construct" id="s3_nist_mirror.NistMirrorStack.of.parameter.construct"></a>
 
 - *Type:* constructs.IConstruct
@@ -580,8 +602,9 @@ The construct to start the search from.
 | <code><a href="#s3_nist_mirror.NistMirrorStack.property.availabilityZones">availabilityZones</a></code> | <code>string[]</code> | Returns the list of AZs that are available in the AWS environment (account/region) associated with this stack. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.property.bundlingRequired">bundlingRequired</a></code> | <code>boolean</code> | Indicates whether the stack requires bundling or not. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.property.dependencies">dependencies</a></code> | <code>aws-cdk-lib.Stack[]</code> | Return the stacks this stack depends on. |
+| <code><a href="#s3_nist_mirror.NistMirrorStack.property.env">env</a></code> | <code>aws-cdk-lib.interfaces.ResourceEnvironment</code> | The environment this Stack deploys to. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.property.environment">environment</a></code> | <code>string</code> | The environment coordinates in which this stack is deployed. |
-| <code><a href="#s3_nist_mirror.NistMirrorStack.property.nested">nested</a></code> | <code>boolean</code> | Indicates if this is a nested stack, in which case `parentStack` will include a reference to it's parent. |
+| <code><a href="#s3_nist_mirror.NistMirrorStack.property.nested">nested</a></code> | <code>boolean</code> | Indicates if this is a nested stack, in which case `parentStack` will include a reference to its parent. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.property.notificationArns">notificationArns</a></code> | <code>string[]</code> | Returns the list of notification Amazon Resource Names (ARNs) for the current stack. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.property.partition">partition</a></code> | <code>string</code> | The partition in which this stack is defined. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.property.region">region</a></code> | <code>string</code> | The AWS region into which this stack will be deployed (e.g. `us-west-2`). |
@@ -592,7 +615,7 @@ The construct to start the search from.
 | <code><a href="#s3_nist_mirror.NistMirrorStack.property.templateFile">templateFile</a></code> | <code>string</code> | The name of the CloudFormation template file emitted to the output directory during synthesis. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.property.templateOptions">templateOptions</a></code> | <code>aws-cdk-lib.ITemplateOptions</code> | Options for CloudFormation template (like version, transform, description). |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.property.urlSuffix">urlSuffix</a></code> | <code>string</code> | The Amazon domain suffix for the region in which this stack is defined. |
-| <code><a href="#s3_nist_mirror.NistMirrorStack.property.nestedStackParent">nestedStackParent</a></code> | <code>aws-cdk-lib.Stack</code> | If this is a nested stack, returns it's parent stack. |
+| <code><a href="#s3_nist_mirror.NistMirrorStack.property.nestedStackParent">nestedStackParent</a></code> | <code>aws-cdk-lib.Stack</code> | If this is a nested stack, returns its parent stack. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.property.nestedStackResource">nestedStackResource</a></code> | <code>aws-cdk-lib.CfnResource</code> | If this is a nested stack, this represents its `AWS::CloudFormation::Stack` resource. |
 | <code><a href="#s3_nist_mirror.NistMirrorStack.property.terminationProtection">terminationProtection</a></code> | <code>boolean</code> | Whether termination protection is enabled for this stack. |
 
@@ -698,6 +721,18 @@ Return the stacks this stack depends on.
 
 ---
 
+##### `env`<sup>Required</sup> <a name="env" id="s3_nist_mirror.NistMirrorStack.property.env"></a>
+
+```typescript
+public readonly env: ResourceEnvironment;
+```
+
+- *Type:* aws-cdk-lib.interfaces.ResourceEnvironment
+
+The environment this Stack deploys to.
+
+---
+
 ##### `environment`<sup>Required</sup> <a name="environment" id="s3_nist_mirror.NistMirrorStack.property.environment"></a>
 
 ```typescript
@@ -730,7 +765,7 @@ public readonly nested: boolean;
 
 - *Type:* boolean
 
-Indicates if this is a nested stack, in which case `parentStack` will include a reference to it's parent.
+Indicates if this is a nested stack, in which case `parentStack` will include a reference to its parent.
 
 ---
 
@@ -898,7 +933,7 @@ public readonly nestedStackParent: Stack;
 
 - *Type:* aws-cdk-lib.Stack
 
-If this is a nested stack, returns it's parent stack.
+If this is a nested stack, returns its parent stack.
 
 ---
 

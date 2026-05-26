@@ -2,16 +2,17 @@
   "dependencies": [
     {
       "name": "@stylistic/eslint-plugin",
-      "version": "^2",
+      "version": "^5.10.0",
       "type": "build"
     },
     {
       "name": "@types/jest",
+      "version": "^30.0.0",
       "type": "build"
     },
     {
       "name": "@types/node",
-      "version": "^24",
+      "version": "^25.9.1",
       "type": "build"
     },
     {
@@ -31,6 +32,7 @@
     },
     {
       "name": "eslint-import-resolver-typescript",
+      "version": "^4.4.4",
       "type": "build"
     },
     {
@@ -39,16 +41,17 @@
     },
     {
       "name": "eslint",
-      "version": "^9",
-      "type": "build"
-    },
-    {
-      "name": "jest",
+      "version": "^9.39.4",
       "type": "build"
     },
     {
       "name": "jest-junit",
       "version": "^17",
+      "type": "build"
+    },
+    {
+      "name": "jest",
+      "version": "^30.4.2",
       "type": "build"
     },
     {
@@ -76,20 +79,22 @@
     },
     {
       "name": "projen",
-      "version": "0.99.58",
+      "version": "0.99.66",
       "type": "build"
     },
     {
       "name": "ts-jest",
+      "version": "^29.4.11",
       "type": "build"
     },
     {
       "name": "typescript",
+      "version": "^6.0.3",
       "type": "build"
     },
     {
       "name": "aws-cdk-lib",
-      "version": "^2.253.1",
+      "version": "^2.257.0",
       "type": "peer"
     },
     {
